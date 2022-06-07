@@ -29,13 +29,15 @@ class TaskController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'date' => 'required'
+            'date' => 'required',
+            'description' => 'required'
         ]);
 
         $newTask = Task::create([
             'name' => $request->name,
             'date' => $request->date,
-            'status' => 'pending'
+            'status' => false,
+            'description' => $request->description
         ]);
 
         return response()->json([
@@ -55,12 +57,15 @@ class TaskController extends Controller
         $request->validate([
             'name' => 'required',
             'date' => 'required',
-            'status' => 'pending'
+            'status' => 'required',
+            'description' => 'required'
         ]);
 
         $task->update([
-            'name' => $task->name,
-            'date' => $task->date
+            'name' => $request->name,
+            'date' => $request->date,
+            'status' => $request->status,
+            'description' => $request->description
         ]);
 
         return response()->json([
